@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>JS + CSS Clock</title>
+</head>
+
+<body>
+
+  
+  <div class="clock clock-asia">
+    <span class="label">India</span>
+    <div class="clock-face">
+      
+      <div class="hand hour-hand-asia"></div>
+      <div class="hand min-hand-asia"></div>
+      <div class="hand second-hand-asia"></div>
+      <div class="center-dot"></div>
+      <div class="number twelve">12</div>
+      <span class="number three">3</span>
+      <span class="number six">6</span>
+      <span class="number nine">9</span>
+    </div>
+  </div>
+
+  
+  <div class="clock clock-us">
+    <span class="label">America</span>
+    <div class="clock-face">
+      
+      <div class="hand hour-hand-us"></div>
+      <div class="hand min-hand-us"></div>
+      <div class="hand second-hand-us"></div>
+      <div class="center-dot"></div>
+      <div class="number twelve">12</div>
+      <span class="number three">3</span>
+      <span class="number six">6</span>
+      <span class="number nine">9</span>
+    </div>
+  </div>
+  
+  
+  <div class="clock clock-eu">
+    <span class="label">Germany</span>
+    <div class="clock-face">
+      
+      <div class="hand hour-hand-eu"></div>
+      <div class="hand min-hand-eu"></div>
+      <div class="hand second-hand-eu"></div>
+      <div class="center-dot"></div>
+      <div class="number twelve">12</div>
+      <span class="number three">3</span>
+      <span class="number six">6</span>
+      <span class="number nine">9</span>
+    </div>
+  </div>
+
+
+  <style>
+    html {
+      background-image: url('world-map.jpg');
+      background-size: cover;
+      font-family: 'helvetica neue';
+      text-align: center;
+      font-size: 10px;
+    }
+
+    .label{
+      color: magenta;
+      top:-55%;
+      position: relative;
+    }
+    body {
+      margin: 0;
+      font-size: 2rem;
+      display: flex;
+      flex: 1;
+      min-height: 100vh;
+      align-items: center;
+    }
+
+    .hour-hand-asia, .hour-hand-us, .hour-hand-eu {
+      width: 30%;
+      height: 4px;
+      background: orangered;
+      border-radius: 3px;
+      transform-origin: 100% ;
+      left: 20%;
+      
+
+    }
+
+    .min-hand-asia, .min-hand-us, .min-hand-eu {
+      width: 50%;
+      height: 3px;
+      background: orangered;
+      border-radius: 2px;
+      transform-origin: 100%;
+      
+
+    }
+
+    .second-hand-asia, .second-hand-us, .second-hand-eu {
+      width: 40%;
+      height: 2px;
+      background: orangered;
+      left:11%;
+      transform-origin: 100%;
+      
+
+    }
+
+    .clock{
+      width: 10rem;
+      height: 10rem;
+      border: 5px solid magenta;
+      border-radius: 50%;
+     
+      position: relative;
+      padding: 2rem;
+      box-shadow:
+        0 0 0 4px rgba(0, 0, 0, 0.1),
+        
+        inset 0 0 10px black,
+        0 0 10px rgba(0, 0, 0, 0.2);
+
+    }
+    .clock-asia{
+      
+      left:61%;
+      top:-90%;
+
+     
+    }
+
+    .clock-eu {
+      left:15%;
+      top:-90%;
+    }
+
+    
+    .clock-us {
+      left:10%;
+      top:-90%;
+    }
+
+    .twelve{
+      top:-40%;
+      left:37%
+      
+
+    }
+
+    .three{
+      top:15%;
+      right:-15%
+    }
+    .six{
+      bottom:-2%;
+      left: 45%
+    }
+    .nine{
+      top:15%;
+      left:-15%
+    }
+
+    .number {
+      position:absolute;
+      color:magenta;
+      font-size: x-large;
+    }
+
+    .clock-face {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform: translateY(-3px);
+      /* account for the height of the clock hands */
+    }
+
+    .center-dot {
+      position: absolute;
+      width:10px;
+      height:10px;
+      border-radius: 10px;
+      background: magenta;
+      left:45%;
+      top: 26%;
+    }
+
+    .hand {
+     
+      position: absolute;
+     top:29%;
+      transform: rotate(90deg);
+       transition: all 0.05s;
+    transition-timing-function: cubic-bezier(0, 2.54, 0.58, 1);
+    }
+  </style>
+
+  <script>
+    
+    function setDateAsia() {
+      const secondHandAsia = document.querySelector('.second-hand-asia');
+    const minuteHandAsia = document.querySelector('.min-hand-asia');
+    const hourHandAsia = document.querySelector('.hour-hand-asia');
+      const now = new Date();
+      const seconds = now.getSeconds();
+     // console.log(now);
+      let secondsDeg = ((seconds/60)*360) + 90 ;
+     // console.log(secondsDeg);
+      secondHandAsia.style.transform = `rotate(${secondsDeg}deg)`;
+      const minutes = now.getMinutes();
+     // console.log(minutes);
+      const minutesDeg = ((minutes/60) * 360) + 90;
+      minuteHandAsia.style.transform = `rotate(${minutesDeg}deg)`;
+
+      const hours = now.getHours();
+     // console.log(hours);
+      const hoursDeg = ((hours/12) * 360) + 90 ;
+      hourHandAsia.style.transform = `rotate(${hoursDeg}deg)`;
+
+
+      
+    }
+
+    function setDateUS() {
+      const secondHandUS = document.querySelector('.second-hand-us');
+    const minuteHandUS = document.querySelector('.min-hand-us');
+    const hourHandUS = document.querySelector('.hour-hand-us');
+      const now = new Date().toLocaleString("en-US", {timeZone: "America/New_York"});
+      const usDate = new Date(now);
+    //  console.log(usDate);
+      const seconds = usDate.getSeconds();
+    // console.log(seconds);
+      let secondsDeg = ((seconds/60)*360) + 90 ;
+     // console.log(secondsDeg);
+      secondHandUS.style.transform = `rotate(${secondsDeg}deg)`;
+      const minutes = usDate.getMinutes();
+     // console.log(minutes);
+      const minutesDeg = ((minutes/60) * 360) + 90;
+      minuteHandUS.style.transform = `rotate(${minutesDeg}deg)`;
+
+      const hours = usDate.getHours();
+     // console.log(hours);
+      const hoursDeg = (hours/12) * 360 + 90;
+      hourHandUS.style.transform = `rotate(${hoursDeg}deg)`;
+    }
+
+    function setDateEU() {
+      const secondHandEU = document.querySelector('.second-hand-eu');
+    const minuteHandEU = document.querySelector('.min-hand-eu');
+    const hourHandEU = document.querySelector('.hour-hand-eu');
+      const now = new Date().toLocaleString("en-US", {timeZone: "Europe/Berlin"});
+      const usDate = new Date(now);
+    //  console.log(usDate);
+      const seconds = usDate.getSeconds();
+    // console.log(seconds);
+      let secondsDeg = ((seconds/60)*360) + 90 ;
+     // console.log(secondsDeg);
+     secondHandEU.style.transform = `rotate(${secondsDeg}deg)`;
+      const minutes = usDate.getMinutes();
+     // console.log(minutes);
+      const minutesDeg = ((minutes/60) * 360) + 90;
+      minuteHandEU.style.transform = `rotate(${minutesDeg}deg)`;
+
+      const hours = usDate.getHours();
+     // console.log(hours);
+      const hoursDeg = (hours/12 ) * 360 + 90;
+      hourHandEU.style.transform = `rotate(${hoursDeg}deg)`;
+    }
+
+    setInterval(setDateAsia, 1000);
+    setInterval(setDateUS, 1000);
+    setInterval(setDateEU, 1000);
+   
+
+  </script>
+</body>
+
+</html>
